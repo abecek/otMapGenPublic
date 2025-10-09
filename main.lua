@@ -1,3 +1,23 @@
+-- ------------------------------------------------------------
+-- Optional compatibility shim for Lua 5.2+ / 5.3+ / 5.4
+-- (No effect on Lua 5.1 / LuaJIT. Helps when running the generator
+--  with a plain Lua 5.4 interpreter by providing 5.1-era globals.)
+-- ------------------------------------------------------------
+if _VERSION ~= "Lua 5.1" then
+	-- Lua 5.1 had global `unpack`; in 5.2+ it moved to `table.unpack`
+	unpack = unpack or table.unpack
+
+	-- Some legacy modules may call `module(...)`. Provide a tiny shim.
+	if type(module) ~= "function" then
+		function module(name)
+			local M = package.loaded[name] or {}
+			package.loaded[name] = M
+			_G[name] = M
+			return M
+		end
+	end
+end
+
 -- Determine execution mode and require logging module
 executionArgs = {...}
 local isCLI = executionArgs[2] == "cli"
