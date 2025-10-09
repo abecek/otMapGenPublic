@@ -1,5 +1,5 @@
 -- Root of the map generator inside TFS data folder (keep trailing slash)
-ROOT_PATH = "data/talkactions/scripts/otMapGen/"
+ROOT_PATH = "data/talkactions/scripts/otMapGenPublic/"
 
 -- ----------------------------
 -- Load config for the generator
